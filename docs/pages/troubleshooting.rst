@@ -23,7 +23,7 @@ it will not work with turbodbc.
 .. note::
 
     Before you file an issue with turbodbc, please make sure that you can actually
-    connect your database using ``isql``.
+    connect to your database using ``isql``.
 
 When you have selected an ODBC configuration as outlined above, enter the following
 command in a shell:
@@ -80,8 +80,10 @@ Troubleshooting:
 *   Check whether the library exists at the specified location.
 *   Check whether you have permission to *read* the library.
 *   Check whether the library depends on other shared libraries that are not present:
+
     *    On Linux, use ``ldd /path/to/library.so``
     *    On OSX, use ``otool -L /path/to/library.dylib``
+
 *   Check whether any superfluous non-printable characters are present in your ``odbc.ini``
     or ``odbcinst.ini`` near the ``Driver`` line. Been there, done that...
 
@@ -96,7 +98,7 @@ with your database. Here are a few common ones:
     locale settings. For example, unicode output may require a locale that supports
     UTF-8, such as ``en-US.utf-8``. Otherwise, replacement characters appear instead of
     unicode characters. Set the locale via environment variables such as ``LC_ALL``
-    or check whether your driver supports to set a locale in its connection options.
+    or check whether your driver supports setting a locale in its connection options.
 *   *Time zones*: ODBC does not feature a dedicated type that is aware of time zones or
     the distinction between local time and UTC. Some databases, however, feature separate
     types for, e.g., timestamps with and without time zone information. ODBC drivers now

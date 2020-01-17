@@ -186,7 +186,7 @@ You can now execute a basic ``INSERT`` query:
     >>> cursor.execute("INSERT INTO TABLE my_integer_table VALUES (42, 17)")
 
 This will insert two values, ``42`` and ``17``, in a single row of table ``my_integer_table``.
-Inserting values like this is impractical, because it requires to put the values
+Inserting values like this is impractical, because it requires putting the values
 into the actual SQL string.
 
 To avoid this, you can pass parameters to ``execute()``:
@@ -198,7 +198,7 @@ To avoid this, you can pass parameters to ``execute()``:
 
 Please note the question marks ``?`` in the SQL string that marks two parameters.
 Adding single rows at a time is not efficient. You can add more than just a single row to a table
-in efficiently by using ``executemany()``:
+efficiently by using ``executemany()``:
 
 ::
 

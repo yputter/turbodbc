@@ -1,7 +1,7 @@
-Microsoft SQL server (MSSQL)
+Microsoft SQL Server (MSSQL)
 ============================
 
-`Microsoft SQL server <https://www.microsoft.com/sql>`_ (MSSQL) is part of turbodbc's
+`Microsoft SQL Server <https://www.microsoft.com/sql>`_ (MSSQL) is part of turbodbc's
 integration databases. That means that each commit in turbodbc's repository
 is automatically tested against MSSQL to ensure compatibility.
 Here are the recommended settings for connecting to a Microsoft SQL database via ODBC

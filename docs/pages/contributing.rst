@@ -57,13 +57,12 @@ do the following:
 
 #.  Create development environment depending on your Python package manager.
 
-    - For a pip-based workflow, a virtual environment, activate it, and install
+    - For a pip-based workflow, create a virtual environment, activate it, and install
       the necessary packages numpy, pyarrow, pytest, and mock:
 
       ::
 
-           pip install numpy pytest pytest-cov mock pyarrow
-
+            pip install numpy pytest pytest-cov mock pyarrow
 
       Make sure you have a recent version of ``cmake`` installed. For some operating
       systems, binary wheels are available in addition to the package your operating
@@ -71,12 +70,12 @@ do the following:
 
       ::
 
-          pip install cmake
+            pip install cmake
 
-   - If you're using ``conda`` to manage your python packages, you can install the
-     dependencies from conda-forge:
+    - If you're using ``conda`` to manage your python packages, you can install the
+      dependencies from conda-forge:
 
-     ::
+      ::
 
         conda create -y -q -n turbodbc-dev pyarrow numpy pybind11 boost-cpp \
             pytest pytest-cov mock cmake unixodbc gtest gmock -c conda-forge

@@ -13,7 +13,7 @@ Using Turbodbc in combination with SQLAlchemy is possible for a (currently) limi
 All of the above packages are available on PyPI. There are also more experimental implementations
 available:
 
-*   `Vertica <https://www.vertica.com>`_: Inofficial
+*   `Vertica <https://www.vertica.com>`_: Unofficial
     `fork of sqlalchemy-vertica <https://github.com/startappdev/sqlalchemy-vertica>`_
 
 Where would I report issues concerning turbodbc?
@@ -26,7 +26,7 @@ Where can I ask questions regarding turbodbc?
 ---------------------------------------------
 
 Basically, you can ask them anywhere, chances to get a helpful answer may vary, though.
-I suggest to ask questions either using turbodbc's issue tracker on
+I suggest asking questions either using turbodbc's issue tracker on
 `GitHub`_ or by heading over to
 `stackoverflow <http://stackoverflow.com/search?q=turbodbc>`_.
 

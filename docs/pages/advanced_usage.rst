@@ -103,7 +103,7 @@ Prefer unicode
 Set ``prefer_unicode`` to ``True`` if your database does not fully support
 the UTF-8 encoding turbodbc prefers. With this option you can tell turbodbc
 to use two-byte character strings with UCS-2/UTF-16 encoding. Use this option
-if you try to connection to Microsoft SQL server (MSSQL).
+if you wish to connect to Microsoft SQL Server (MSSQL).
 
 
 .. _advanced_usage_options_autocommit:
@@ -127,7 +127,7 @@ Large decimals as 64 bit types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Set ``large_decimals_as_64_bit_types`` to ``True`` if you want to retrieve
-``Decimal`` and ``Numeric`` types with more than ``18`` digits as the 64 bit
+``Decimal`` and ``Numeric`` types with more than ``18`` digits as 64 bit
 ``integer`` and ``float`` numbers. The default is to retrieve such fields
 as strings instead.
 
@@ -258,7 +258,7 @@ Notes regarding NumPy result sets
     order is the same as in your query.
 *   The column values are of type ``MaskedArray``. Any ``NULL`` values you have in your
     database will show up as masked entries (``NULL`` values in string-like columns
-    will shop up as ``None`` objects).
+    will show up as ``None`` objects).
 
 The following table shows how the most common data types data scientists are interested in
 are converted to NumPy columns:
@@ -276,9 +276,9 @@ are converted to NumPy columns:
 +-----------------------------------+------------------------------+
 | ``BIT``, boolean-like             | ``bool_``                    |
 +-----------------------------------+------------------------------+
-| ``TIMESTAMP``, ``TIME``           | ``datetime64[us]``           |
+| ``TIMESTAMP``, ``TIME``           | ``datetime64[µs]``           |
 +-----------------------------------+------------------------------+
-| ``DATE``                          | ``datetime64[D}``            |
+| ``DATE``                          | ``datetime64[D]``            |
 +-----------------------------------+------------------------------+
 | ``VARCHAR``, strings              | ``object_``                  |
 +-----------------------------------+------------------------------+
@@ -318,9 +318,9 @@ as query parameters with ``executemanycolumns()``:
 *   Each column must contain one-dimensional, contiguous data.
 *   All columns must have equal size.
 *   The ``dtype`` of each column must be supported, see the table below.
-*   Use ``MaskedArray``s with and set the ``mask`` to ``True`` for individual
+*   Use ``MaskedArray`` and set the ``mask`` to ``True`` for individual
     elements to use ``None`` values.
-*   Data is transfered in batches (see :ref:`advanced_usage_options_write_buffer`)
+*   Data is transferred in batches (see :ref:`advanced_usage_options_write_buffer`)
 
 
 +-------------------------------------------------------------------------+--------------------------------+
@@ -332,7 +332,7 @@ as query parameters with ``executemanycolumns()``:
 +-------------------------------------------------------------------------+--------------------------------+
 | ``bool_``                                                               | ``BIT``                        |
 +-------------------------------------------------------------------------+--------------------------------+
-| ``datetime64[us]``                                                      | ``TIMESTAMP``                  |
+| ``datetime64[µs]``                                                      | ``TIMESTAMP``                  |
 +-------------------------------------------------------------------------+--------------------------------+
 | ``datetime64[ns]``                                                      | ``TIMESTAMP``                  |
 +-------------------------------------------------------------------------+--------------------------------+
@@ -397,7 +397,7 @@ As a performance optimisation for string columns, you can specify the parameter
 ``strings_as_dictionary``. This will retrieve all string columns as Arrow
 ``DictionaryArray``. The data will here be split into two arrays, one that stores
 all unique string values and one integer array that stores for each row the index
-in the dictionary. On converions to Pandas, these columns will be turned into
+in the dictionary. On conversion to Pandas, these columns will be turned into
 ``pandas.Categorical``.
 
 ::
@@ -474,8 +474,8 @@ returned by the database. This mode can be activated by setting
 Obtaining Apache Arrow result sets in batches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Similar to the numpy support for fetching results as batche, you can
-fetch an query result as an iterator of pyarrow tables.
+Similar to the numpy support for fetching results as a batch, you can
+fetch a query result as an iterator of pyarrow tables.
 
 ::
 
@@ -523,19 +523,19 @@ tables as query parameters with ``executemanycolumns()``:
     no support for chunked arrays yet.
 *   All columns must have equal size.
 *   The ``dtype`` of each column must be supported, see the table below.
-*   Data is transfered in batches (see :ref:`advanced_usage_options_write_buffer`)
+*   Data is transferred in batches (see :ref:`advanced_usage_options_write_buffer`)
 
 
 +------------------------------------------------------------------------------+--------------------------------+
 | Supported Apache Arrow type                                                  | Transferred as                 |
 +==============================================================================+================================+
 | ``INT8``, ``UINT8``, ``INT16``, ``UINT16``, ``INT32``, ``UINT32``, ``INT64`` | ``BIGINT`` (64 bits)           |
-+-------------------------------------------------------------------------+-------------------------------------+
++------------------------------------------------------------------------------+--------------------------------+
 | ``DOUBLE``                                                                   | ``DOUBLE PRECISION`` (64 bits) |
 +------------------------------------------------------------------------------+--------------------------------+
 | ``BOOL``                                                                     | ``BIT``                        |
 +------------------------------------------------------------------------------+--------------------------------+
-| ``TIMESTAMP[us]``                                                            | ``TIMESTAMP``                  |
+| ``TIMESTAMP[µs]``                                                            | ``TIMESTAMP``                  |
 +------------------------------------------------------------------------------+--------------------------------+
 | ``TIMESTAMP[ns]``                                                            | ``TIMESTAMP``                  |
 +------------------------------------------------------------------------------+--------------------------------+
