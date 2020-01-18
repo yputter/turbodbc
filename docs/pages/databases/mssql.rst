@@ -59,13 +59,13 @@ Official Microsoft ODBC driver (Windows)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Put these values in your registry under the given key. Be sure to prefer the
-`latest ODBC driver <https://www.microsoft.com/en-us/download/details.aspx?id=50420>`_
+`latest ODBC driver <https://www.microsoft.com/en-us/download/details.aspx?id=56567>`_
 over any driver that may come bundled with your Windows version.
 
 .. code-block:: ini
 
     [HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBC.INI\MSSQL]
-    "Driver"="C:\\Windows\\system32\\msodbcsql13.dll"
+    "Driver"="C:\\Windows\\system32\\msodbcsql17.dll"
     "Server"="<host>"
     "Database"="<database>"
 

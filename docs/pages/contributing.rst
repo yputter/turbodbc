@@ -156,4 +156,4 @@ do the following:
     by others to install turbodbc with ``pip install turbodbc-x.y.z.tar.gz``.
 
 
-.. _GitHub: <https://github.com/blue-yonder/turbodbc>
+.. _GitHub: https://github.com/blue-yonder/turbodbc

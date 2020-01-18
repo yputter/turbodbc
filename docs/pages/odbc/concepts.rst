@@ -14,7 +14,7 @@ for some advanced usage patterns. But in essence, all ODBC drivers are born more
 less equal.
 
 ODBC drivers are easy to come by. Major database vendors offer ODBC drivers as free
-downloads (`Microsoft SQL Server <https://www.microsoft.com/en-us/download/details.aspx?id=50420>`_,
+downloads (`Microsoft SQL Server <https://www.microsoft.com/en-us/download/details.aspx?id=56567>`_,
 `Exasol <https://www.exasol.com/portal/display/DOWNLOAD/6.0>`_,
 `Teradata <https://downloads.teradata.com/download/connectivity/odbc-driver/windows>`_, etc).
 Open source databases provide ODBC databases as part of their projects
