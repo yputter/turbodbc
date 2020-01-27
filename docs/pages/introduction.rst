@@ -2,9 +2,9 @@ Introduction
 ============
 
 Turbodbc is a Python module to access relational databases via the Open Database
-Connectivity (ODBC) interface. In addition to complying with the Python Database API
-Specification 2.0, turbodbc offers built-in NumPy support. Don't wait minutes for your
-results, just blink.
+Connectivity (ODBC) interface. In addition to complying with the
+`Python Database API Specification 2.0 <https://www.python.org/dev/peps/pep-0249/>`_,
+turbodbc offers built-in NumPy support. Don't wait minutes for your results, just blink.
 
 
 Features

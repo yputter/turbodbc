@@ -14,7 +14,7 @@ for some advanced usage patterns. But in essence, all ODBC drivers are born more
 less equal.
 
 ODBC drivers are easy to come by. Major database vendors offer ODBC drivers as free
-downloads (`Microsoft SQL server <https://www.microsoft.com/en-us/download/details.aspx?id=50420>`_,
+downloads (`Microsoft SQL Server <https://www.microsoft.com/en-us/download/details.aspx?id=56567>`_,
 `Exasol <https://www.exasol.com/portal/display/DOWNLOAD/6.0>`_,
 `Teradata <https://downloads.teradata.com/download/connectivity/odbc-driver/windows>`_, etc).
 Open source databases provide ODBC databases as part of their projects
@@ -25,7 +25,7 @@ Many ODBC drivers are also shipped with Linux distributions or are readily
 available via `Homebrew <https://github.com/Homebrew/homebrew-core>`_ for OSX.
 Last but not least, commercial ODBC drivers are available at
 `Progress <https://www.progress.com/odbc>`_ or `easysoft <http://www.easysoft.com/index.html>`_,
-claiming better performance that their freely available counterparts.
+claiming better performance than their freely available counterparts.
 
 
 .. _odbc_driver_manager:
