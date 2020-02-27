@@ -8,12 +8,24 @@ Getting started
 Installation
 ------------
 
+Conda
+~~~~~
+
+We generally recommend to use
+[conda](https://docs.conda.io/projects/conda/en/latest/index.html) to install
+`turbodbc`. This will fetch the pre-compiled binaries and all dependencies for
+your platform::
+
+   conda install -c conda-forge turbodbc
+
+
+Pip
+~~~
+
 Linux and OSX
-~~~~~~~~~~~~~
+*************
 
-
-To install turbodbc on Linux and OSX, please use the following command:
-
+To install turbodbc on Linux and OSX using pip, use the following command:
 ::
 
     pip install turbodbc
@@ -44,7 +56,7 @@ to use the :ref:`optional Apache Arrow support <advanced_usage_arrow>`.
 
 
 Windows
-~~~~~~~
+*******
 
 To install turbodbc on Windows, please use the following command:
 
