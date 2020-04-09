@@ -11,12 +11,14 @@ Installation
 Conda
 ~~~~~
 
-We generally recommend to use
-[conda](https://docs.conda.io/projects/conda/en/latest/index.html) to install
-`turbodbc`. This will fetch the pre-compiled binaries and all dependencies for
-your platform::
+We generally recommend using `conda`_ to install `turbodbc`. This will fetch the
+pre-compiled binaries and all dependencies for your platform:
 
-   conda install -c conda-forge turbodbc
+::
+
+    conda install -c conda-forge turbodbc
+
+.. _conda: https://docs.conda.io/projects/conda/en/latest/index.html
 
 
 Pip
@@ -77,16 +79,39 @@ to meet the following prerequisites, though:
 | Runtime     | `MSVS 2015 Update 3 Redistributable, 64 bit`_ |
 +-------------+-----------------------------------------------+
 
+If you wish to install turbodbc with a later (64-bit) version of Python, you must
+manually install the Boost C++ libraries first:
+
+#. The Boost libraries must be compiled, hence if you don't have a suitable C++
+   compiler installed already, download the "Build Tools for Visual Studio 2019"
+   from `Microsoft Visual Studio`_, and install the "C++ build tools" Workload.
+#. Download Boost from https://www.boost.org/ (click on the "Current Release"
+   version link, e.g. "Version 1.72.0", then download the Windows zip file).
+#. Unzip the zipfile somewhere on your PC, e.g. the Downloads folder.
+#. In a command prompt, navigate to the unzipped Boost top-level directory.
+#. Run ``.\bootstrap.bat`` (this generates the ``b2`` executable).
+#. Run ``.\b2`` (this generates the ``stage`` directory and contents, takes a
+   few minutes to run).
+
+At this point, Boost is available but you must set the BOOST_ROOT environment
+variable before installing turbodbc, e.g.:
+
+::
+
+    set BOOST_ROOT=C:\your\path\to\boost\boost_1_72_0\boost_1_72_0
+    pip install turbodbc
+
 If you require NumPy support, please
 
 ::
 
     pip install numpy
 
-Sometime after installing turbodbc. Apache Arrow support is not yet available
+sometime after installing turbodbc. Apache Arrow support is not yet available
 on Windows.
 
 .. _MSVS 2015 Update 3 Redistributable, 64 bit: https://www.microsoft.com/en-us/download/details.aspx?id=53840
+.. _Microsoft Visual Studio: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019
 
 
 Basic usage
