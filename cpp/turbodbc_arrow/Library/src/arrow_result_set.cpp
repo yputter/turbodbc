@@ -68,28 +68,6 @@ class StringDictionaryBuilderProxy: public StringDictionaryBuilder {
     }
 
     Status FinishInternal(std::shared_ptr<arrow::ArrayData>* out) override {
-        // ARROW-4367: StringDictionaryBuilder segfaults on Finish with only null entries
-        if (length_ == null_count_) {
-            auto values = std::make_shared<arrow::StringArray>(0, std::shared_ptr<arrow::Buffer>(), std::shared_ptr<arrow::Buffer>());
-#if ARROW_VERSION_MAJOR == 0 && ARROW_VERSION_MINOR < 14
-            auto type = arrow::dictionary(arrow::int32(), values);
-#else
-            auto type = arrow::dictionary(arrow::int32(), arrow::utf8());
-#endif
-            Int32Builder builder;
-            for (size_t i = 0; i != length_; i++) {
-                ARROW_RETURN_NOT_OK(builder.AppendNull());
-            }
-            std::shared_ptr<arrow::Array> indices;
-            ARROW_RETURN_NOT_OK(builder.Finish(&indices));
-#if ARROW_VERSION_MAJOR == 0 && ARROW_VERSION_MINOR < 14
-            *out = arrow::DictionaryArray(type, indices).data();
-#else
-            *out = arrow::DictionaryArray(type, indices, values).data();
-#endif
-
-            return Status::OK();
-        }
         return StringDictionaryBuilder::FinishInternal(out);
     };
 
@@ -377,12 +355,17 @@ pybind11::object arrow_result_set::fetch_all()
     std::shared_ptr<arrow::Table> table;
     {
         pybind11::gil_scoped_release release;
-        if (not fetch_all_native(&table, false).ok()) {
-            throw turbodbc::interface_error("Fetching Arrow result set failed.");
+        auto st = fetch_all_native(&table, false);
+        if (not st.ok()) {
+            throw turbodbc::interface_error("Fetching Arrow result set failed.\n" + st.ToString());
         }
     }
     arrow::py::import_pyarrow();
-    return pybind11::reinterpret_steal<pybind11::object>(pybind11::handle(arrow::py::wrap_table(table)));
+    auto h = pybind11::handle(arrow::py::wrap_table(table));
+    if (!h) {
+        throw pybind11::error_already_set();
+    }
+    return pybind11::reinterpret_steal<pybind11::object>(h);
 }
 
 

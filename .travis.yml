@@ -5,14 +5,14 @@ language: python
 jobs:
   include:
   - os: osx
-    name: CPython2.7 Arrow 0.13.0
+    name: CPython2.7 Arrow 0.15.1
     osx_image: xcode9.4
     language: generic
     env:
     - TRAVIS_PYTHON_VERSION="2.7.13"
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json"
     - ODBC_DIR=odbc_osx
-    - TURBODBC_ARROW_VERSION=0.13.0
+    - TURBODBC_ARROW_VERSION=0.15.1
 #  Disable for now until a workaround for the detection of pyenv versions by pybind11
 #  is found
 #  - os: osx
@@ -22,39 +22,31 @@ jobs:
 #    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json"
 #    - ODBC_DIR=odbc_osx
   - os: linux
-    name: CPython2.7 Arrow 0.13.0
+    name: CPython2.7 Arrow 0.15.1
     language: python
     python: "2.7"
     env:
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
     - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.13.0
+    - TURBODBC_ARROW_VERSION=0.15.1
   - os: linux
-    name: CPython3.5 Arrow 0.13.0
+    name: CPython3.5 Arrow 0.15.1
     language: python
     python: "3.5"
     env:
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
     - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.13.0
+    - TURBODBC_ARROW_VERSION=0.16.0
   - os: linux
-    name: CPython3.6 Arrow 0.12.1
+    name: CPython3.6 Arrow 0.16.0
     language: python
     python: "3.6"
     env:
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
     - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.12.1
+    - TURBODBC_ARROW_VERSION=0.16.0
   - os: linux
-    name: CPython3.6 Arrow 0.13.0
-    language: python
-    python: "3.6"
-    env:
-    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
-    - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.13.0
-  - os: linux
-    name: CPython3.7 Arrow 0.13.0
+    name: CPython3.7 Arrow 0.16.0
     dist: xenial
     language: python
     addons:
@@ -72,49 +64,9 @@ jobs:
     - TURBODBC_USE_CONDA=yes
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mssql.json"
     - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.13.0
+    - TURBODBC_ARROW_VERSION=0.16.0
   - os: linux
-    name: CPython3.7 Arrow 0.14.1
-    dist: xenial
-    language: python
-    addons:
-      apt:
-        packages:
-          - unixodbc
-          - unixodbc-dev
-          - odbc-postgresql
-    services:
-      - docker
-      - postgresql
-      - mysql
-    python: "3.7"
-    env:
-    - TURBODBC_USE_CONDA=yes
-    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mssql.json"
-    - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.14.1
-  - os: linux
-    name: CPython3.7 Arrow 0.15.0
-    dist: xenial
-    language: python
-    addons:
-      apt:
-        packages:
-          - unixodbc
-          - unixodbc-dev
-          - odbc-postgresql
-    services:
-      - docker
-      - postgresql
-      - mysql
-    python: "3.7"
-    env:
-    - TURBODBC_USE_CONDA=yes
-    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mssql.json"
-    - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.15.0
-  - os: linux
-    name: CPython3.8 Arrow 0.15.1
+    name: CPython3.8 Arrow 0.16.0
     dist: xenial
     language: python
     addons:
@@ -132,7 +84,27 @@ jobs:
     - TURBODBC_USE_CONDA=yes
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mssql.json"
     - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.15.1
+    - TURBODBC_ARROW_VERSION=0.16.0
+  - os: linux
+    name: CPython3.8 Arrow Nightlies
+    dist: xenial
+    language: python
+    addons:
+      apt:
+        packages:
+          - unixodbc
+          - unixodbc-dev
+          - odbc-postgresql
+    services:
+      - docker
+      - postgresql
+      - mysql
+    python: "3.8"
+    env:
+    - TURBODBC_USE_CONDA=yes
+    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mssql.json"
+    - ODBC_DIR=odbc
+    - TURBODBC_ARROW_VERSION=nightly
 
 services:
   - mysql
@@ -177,25 +149,48 @@ before_install: |
     source $MINICONDA/etc/profile.d/conda.sh
     conda config --remove channels defaults
     conda config --add channels conda-forge
-    conda create -y -q -n turbodbc-dev \
-        gcc_linux-64 \
-        make \
-        ninja \
-        cmake \
-        coveralls \
-        gmock \
-        gtest \
-        gxx_linux-64 \
-        mock \
-        pytest \
-        pytest-cov \
-        python=${TRAVIS_PYTHON_VERSION} \
-        unixodbc \
-        boost-cpp \
-        numpy \
-        pyarrow=$TURBODBC_ARROW_VERSION \
-        pybind11 \
-        -c conda-forge
+    if [ "${TURBODBC_ARROW_VERSION}" == "nightly" ]; then
+      conda create -y -q -n turbodbc-dev \
+          gcc_linux-64 \
+          make \
+          ninja \
+          cmake \
+          coveralls \
+          gmock \
+          gtest \
+          gxx_linux-64 \
+          mock \
+          pytest \
+          pytest-cov \
+          python=${TRAVIS_PYTHON_VERSION} \
+          unixodbc \
+          boost-cpp \
+          numpy \
+          pyarrow \
+          pybind11 \
+          -c arrow-nightlies \
+          -c conda-forge
+    else
+      conda create -y -q -n turbodbc-dev \
+          gcc_linux-64 \
+          make \
+          ninja \
+          cmake \
+          coveralls \
+          gmock \
+          gtest \
+          gxx_linux-64 \
+          mock \
+          pytest \
+          pytest-cov \
+          python=${TRAVIS_PYTHON_VERSION} \
+          unixodbc \
+          boost-cpp \
+          numpy \
+          pyarrow=$TURBODBC_ARROW_VERSION \
+          pybind11 \
+          -c conda-forge
+    fi
     conda activate turbodbc-dev
   fi
 
@@ -203,7 +198,7 @@ install: |
   if [ "${TURBODBC_USE_CONDA}" != "yes" ]; then
     pip install \
       coveralls \
-      numpy==1.14.5 \
+      numpy==1.16.6 \
       pandas \
       pyarrow==$TURBODBC_ARROW_VERSION \
       pytest-cov \
