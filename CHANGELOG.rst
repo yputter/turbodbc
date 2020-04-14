@@ -7,7 +7,7 @@ Version 3.4.0
 -------------
 
 * Support Arrow 0.16.x and 0.17.x, require at least 0.15.x
-* Minimal NumPy version was bumped to 1.6
+* Minimal NumPy version was bumped to 1.16
 
 Version 3.3.0
 -------------
