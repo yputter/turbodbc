@@ -88,7 +88,8 @@ manually install the Boost C++ libraries first:
 #. Download Boost from https://www.boost.org/ (click on the "Current Release"
    version link, e.g. "Version 1.72.0", then download the Windows zip file).
 #. Unzip the zipfile somewhere on your PC, e.g. the Downloads folder.
-#. In a command prompt, navigate to the unzipped Boost top-level directory.
+#. In an "x64 Native Tools Command Prompt for VS 2019" command prompt (or
+   equivalent), navigate to the unzipped Boost top-level directory.
 #. Run ``.\bootstrap.bat`` (this generates the ``b2`` executable).
 #. Run ``.\b2`` (this generates the ``stage`` directory and contents, takes a
    few minutes to run).
