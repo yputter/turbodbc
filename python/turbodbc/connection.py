@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from weakref import WeakSet
 
 from .exceptions import translate_exceptions, InterfaceError

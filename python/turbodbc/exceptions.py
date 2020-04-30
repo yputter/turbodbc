@@ -1,19 +1,10 @@
-from __future__ import absolute_import
-
 from functools import wraps
 
 from turbodbc_intern import Error as InternError
 from turbodbc_intern import InterfaceError as InternInterfaceError
 
 
-# Python 2/3 compatibility
-try:
-    from exceptions import StandardError as _BaseError
-except ImportError:
-    _BaseError = Exception
-
-
-class Error(_BaseError):
+class Error(Exception):
     """
     turbodbc's basic error class
     """
@@ -32,7 +23,7 @@ class DatabaseError(Error):
     An error that is raised when the database encounters an error while processing
     your commands and queries
     """
-    pass 
+    pass
 
 
 class ParameterError(Error):

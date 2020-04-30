@@ -29,21 +29,11 @@ void set_numpy_parameters(turbodbc::cursor & cursor, std::vector<std::tuple<pybi
 
 }
 
-// this function is required to work around issues and compiler warnings with
-// the import_array() macro on systems with Python 2/3
-#if PY_VERSION_HEX >= 0x03000000
-    void * enable_numpy_support()
-    {
-        import_array();
-        return nullptr;
-    }
-#else
-    void enable_numpy_support()
-    {
-        import_array();
-    }
-#endif
-
+void * enable_numpy_support()
+{
+    import_array();
+    return nullptr;
+}
 
 PYBIND11_MODULE(turbodbc_numpy_support, module) {
     enable_numpy_support();

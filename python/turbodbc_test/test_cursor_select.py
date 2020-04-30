@@ -1,6 +1,5 @@
 import datetime
 import pytest
-import six
 
 import turbodbc
 
@@ -11,15 +10,15 @@ from helpers import open_cursor, for_each_database, for_one_database, for_each_d
 def _test_single_row_result_set(configuration, query, expected_row):
     with open_cursor(configuration) as cursor:
         cursor.execute(query)
-    
+
         if configuration["capabilities"]['supports_row_count']:
             assert cursor.rowcount == 1
         else:
             assert cursor.rowcount == -1
-    
+
         row = cursor.fetchone()
         assert row == expected_row
-    
+
         row = cursor.fetchone()
         assert None == row
 
@@ -138,7 +137,7 @@ def test_fetchone(dsn, configuration):
             assert row == [43]
             row = cursor.fetchone()
             assert row == [44]
-    
+
             row = cursor.fetchone()
             assert None == row
 
@@ -236,13 +235,13 @@ def test_number_of_rows_exceeds_buffer_size(dsn, configuration):
     with open_cursor(configuration, rows_to_buffer=buffer_size) as cursor:
         with query_fixture(cursor, configuration, 'INSERT INTEGER') as table_name:
             numbers = buffer_size * 2 + 1
-            for i in six.moves.range(numbers):
+            for i in range(numbers):
                 cursor.execute("INSERT INTO {} VALUES ({})".format(table_name, i))
 
             cursor.execute("SELECT a FROM {}".format(table_name))
             retrieved = cursor.fetchall()
             actual_sum = sum([row[0] for row in retrieved])
-            expected_sum = sum(six.moves.range(numbers))
+            expected_sum = sum(range(numbers))
             assert expected_sum == actual_sum
 
 

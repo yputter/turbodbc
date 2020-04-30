@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from itertools import islice
 from collections import OrderedDict
 
@@ -81,8 +79,6 @@ class Cursor(object):
             raise StopIteration
         else:
             return element
-
-    next = __next__  # Python 2 compatibility
 
     def _assert_valid(self):
         if self.impl is None:

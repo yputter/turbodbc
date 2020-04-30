@@ -3,6 +3,11 @@ Version history / changelog
 
 From version 2.0.0, turbodbc adapts semantic versioning.
 
+Version 4.0.0
+-------------
+
+* Minimal supported python version is 3.6.X now
+
 Version 3.4.0
 -------------
 
