@@ -6,7 +6,7 @@ jobs:
   include:
   - os: osx
     name: CPython3.6 Arrow 0.15.1
-    osx_image: xcode11.4
+    osx_image: xcode9.4
     language: generic
     env:
     - TRAVIS_PYTHON_VERSION="3.6.10"
@@ -99,8 +99,6 @@ addons:
 
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    brew update
-    brew upgrade
     brew install unixodbc pyenv pyenv-virtualenv psqlodbc boost
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
