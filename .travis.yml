@@ -5,38 +5,14 @@ language: python
 jobs:
   include:
   - os: osx
-    name: CPython2.7 Arrow 0.15.1
+    name: CPython3.6 Arrow 0.15.1
     osx_image: xcode9.4
     language: generic
     env:
-    - TRAVIS_PYTHON_VERSION="2.7.13"
+    - TRAVIS_PYTHON_VERSION="3.6.10"
     - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json"
     - ODBC_DIR=odbc_osx
     - TURBODBC_ARROW_VERSION=0.15.1
-#  Disable for now until a workaround for the detection of pyenv versions by pybind11
-#  is found
-#  - os: osx
-#    language: generic
-#    env:
-#    - TRAVIS_PYTHON_VERSION="3.6.0"
-#    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json"
-#    - ODBC_DIR=odbc_osx
-  - os: linux
-    name: CPython2.7 Arrow 0.15.1
-    language: python
-    python: "2.7"
-    env:
-    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
-    - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.15.1
-  - os: linux
-    name: CPython3.5 Arrow 0.15.1
-    language: python
-    python: "3.5"
-    env:
-    - TURBODBC_TEST_CONFIGURATION_FILES="query_fixtures_postgresql.json,query_fixtures_mysql.json"
-    - ODBC_DIR=odbc
-    - TURBODBC_ARROW_VERSION=0.16.0
   - os: linux
     name: CPython3.6 Arrow 0.16.0
     language: python
@@ -123,7 +99,8 @@ addons:
 
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    brew install unixodbc pyenv pyenv-virtualenv psqlodbc
+    brew install unixodbc pyenv pyenv-virtualenv psqlodbc boost
+    brew upgrade unixodbc pyenv pyenv-virtualenv psqlodbc boost
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     pyenv install ${TRAVIS_PYTHON_VERSION}
@@ -202,7 +179,6 @@ install: |
       pandas \
       pyarrow==$TURBODBC_ARROW_VERSION \
       pytest-cov \
-      six \
       twine
   fi
 
@@ -234,7 +210,11 @@ script:
       cmake -DBOOST_ROOT=$CONDA_PREFIX -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist  -DPYTHON_EXECUTABLE=`which python` -GNinja ..
       ninja
     else
-      cmake -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} ..
+      if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        cmake -DBOOST_ROOT=/usr/local -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} ..
+      else
+        cmake -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} ..
+      fi
       make -j4
     fi
   - |

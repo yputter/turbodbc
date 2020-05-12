@@ -1,7 +1,4 @@
 import pytest
-import six
-
-from turbodbc import connect
 
 from query_fixture import query_fixture
 from helpers import for_one_database, open_cursor
@@ -13,7 +10,7 @@ def test_many_batches_with_async_io(dsn, configuration):
         with query_fixture(cursor, configuration, 'INSERT INTEGER') as table_name:
             # insert 2^16 rows
             cursor.execute("INSERT INTO {} VALUES (1)".format(table_name))
-            for _ in six.moves.range(16):
+            for _ in range(16):
                 cursor.execute("INSERT INTO {} SELECT * FROM {}".format(table_name,
                                                                         table_name))
 

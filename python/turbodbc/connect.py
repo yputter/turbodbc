@@ -1,8 +1,3 @@
-from __future__ import absolute_import
-
-import warnings
-import six
-
 from turbodbc_intern import connect as intern_connect
 
 from .exceptions import translate_exceptions, ParameterError
@@ -12,7 +7,7 @@ from .options import make_options
 def _make_connection_string(dsn, **kwargs):
     if dsn:
         kwargs['dsn'] = dsn
-    return ';'.join(["{}={}".format(key, value) for key, value in six.iteritems(kwargs)])
+    return ';'.join(["{}={}".format(key, value) for key, value in kwargs.items()])
 
 
 @translate_exceptions
