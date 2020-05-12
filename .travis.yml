@@ -259,6 +259,6 @@ deploy:
   on:
     tags: true
     os: linux
-    python: "2.7"
+    python: "3.6"
     branch: master
     repo: blue-yonder/turbodbc
