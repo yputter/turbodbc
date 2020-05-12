@@ -100,6 +100,7 @@ addons:
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     brew install unixodbc pyenv pyenv-virtualenv psqlodbc boost
+    brew upgrade unixodbc pyenv pyenv-virtualenv psqlodbc boost
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     pyenv install ${TRAVIS_PYTHON_VERSION}
