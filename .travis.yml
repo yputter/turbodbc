@@ -99,7 +99,7 @@ addons:
 
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    brew install unixodbc pyenv pyenv-virtualenv psqlodbc
+    brew install unixodbc pyenv pyenv-virtualenv psqlodbc boost ninja
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     pyenv install ${TRAVIS_PYTHON_VERSION}
@@ -209,8 +209,13 @@ script:
       cmake -DBOOST_ROOT=$CONDA_PREFIX -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist  -DPYTHON_EXECUTABLE=`which python` -GNinja ..
       ninja
     else
-      cmake -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} ..
-      make -j4
+      if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        cmake -DBOOST_ROOT=/usr/local -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} -GNinja ..
+        ninja
+      else
+        cmake -DBUILD_COVERAGE=ON -DCMAKE_INSTALL_PREFIX=./dist -DPYBIND11_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION} ..
+        make -j4
+      fi
     fi
   - |
       if [ "$TRAVIS_OS_NAME" == "osx" ]; then
