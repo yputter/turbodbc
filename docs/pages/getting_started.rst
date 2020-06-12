@@ -95,11 +95,12 @@ manually install the Boost C++ libraries first:
    few minutes to run).
 
 At this point, Boost is available but you must set the BOOST_ROOT environment
-variable before installing turbodbc, e.g.:
+variable before installing turbodbc.  Set BOOST_ROOT to the directory that contains
+the ``bootstrap.bat`` file referenced above, e.g.:
 
 ::
 
-    set BOOST_ROOT=C:\your\path\to\boost\boost_1_72_0\boost_1_72_0
+    set BOOST_ROOT=C:\your path to\boost_1_72_0
     pip install turbodbc
 
 If you require NumPy support, please
@@ -291,11 +292,15 @@ The following table shows which database types are converted to which Python typ
 +-------------------------------------------+--------------------------------------+
 | ``BIT``, boolean-like                     | ``bool``                             |
 +-------------------------------------------+--------------------------------------+
-| ``TIMESTAMP``, ``TIME``                   | ``datetime.datetime``                |
+| ``TIMESTAMP``, ``DATETIME``               | ``datetime.datetime``                |
 +-------------------------------------------+--------------------------------------+
 | ``DATE``                                  | ``datetime.date``                    |
 +-------------------------------------------+--------------------------------------+
 | ``VARCHAR``, strings                      | ``unicode`` (``str``)                |
++-------------------------------------------+--------------------------------------+
+| ``TIME``                                  | (not supported)                      |
++-------------------------------------------+--------------------------------------+
+| ``UUID``, ``GUID``                        | (not supported)                      |
 +-------------------------------------------+--------------------------------------+
 
 \*) The conversion depends on turbodbc's ``large_decimals_as_64_bit_types``
