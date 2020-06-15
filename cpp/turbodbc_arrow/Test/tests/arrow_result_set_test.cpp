@@ -110,14 +110,22 @@ class ArrowResultSetTest : public ::testing::Test {
         std::shared_ptr<arrow::Array> MakePrimitive(int64_t length, int64_t null_count = 0) {
             std::shared_ptr<arrow::ResizableBuffer> data;
             const int64_t data_nbytes = length * sizeof(typename ArrayType::value_type);
+#if ARROW_VERSION_MAJOR > 0 || ARROW_VERSION_MINOR >= 17
             data = *AllocateResizableBuffer(data_nbytes, pool);
+#else
+            ARROW_EXPECT_OK(AllocateResizableBuffer(pool, data_nbytes, &data));
+#endif
 
             // Fill with random data
             random_bytes(data_nbytes, 0 /*random_seed*/, data->mutable_data());
 
             std::shared_ptr<arrow::ResizableBuffer> null_bitmap;
             const int64_t null_nbytes = arrow::BitUtil::BytesForBits(length);
+#if ARROW_VERSION_MAJOR > 0 || ARROW_VERSION_MINOR >= 17
             null_bitmap = *AllocateResizableBuffer(null_nbytes, pool);
+#else
+            ARROW_EXPECT_OK(AllocateResizableBuffer(pool, null_nbytes, &null_bitmap));
+#endif
             memset(null_bitmap->mutable_data(), 255, null_nbytes);
             for (int64_t i = 0; i < null_count; i++) {
                 arrow::BitUtil::ClearBit(null_bitmap->mutable_data(), i * (length / null_count));
