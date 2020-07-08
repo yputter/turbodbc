@@ -1,6 +1,7 @@
 #include <turbodbc_arrow/arrow_result_set.h>
 
 #include <list>
+#include <random>
 
 #undef BOOL
 #undef timezone
@@ -18,9 +19,6 @@
 #include <sql.h>
 
 using arrow::StringDictionaryBuilder;
-#ifdef ARROW_VERSION
-using arrow::random_bytes;
-#endif
 
 namespace {
 
@@ -49,13 +47,11 @@ namespace {
         ASSERT_OK(builder.Finish(out));
     }
 
-#ifndef ARROW_VERSION
     void random_bytes(int64_t n, uint32_t seed, uint8_t* out) {
         std::default_random_engine gen(seed);
         std::uniform_int_distribution<uint32_t> d(0, std::numeric_limits<uint8_t>::max());
         std::generate(out, out + n, [&d, &gen] { return static_cast<uint8_t>(d(gen)); });
     }
-#endif
 
 }
 
